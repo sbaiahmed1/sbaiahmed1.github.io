@@ -4,7 +4,11 @@
       "details": [
            {
              "appID": "A3F4G9MPR2.com.yvesrocher.alpha",
-             "paths": [ "/recover/*", "/settings/*" ]
+             "paths": ["/"]
+           }
+           {
+             "appID": "BS95LK5P36.com.yvesrocher.alpha",
+             "paths": ["/"]
            }
        ]
    }
