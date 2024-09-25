@@ -3,7 +3,7 @@
       "apps": [],
       "details": [
            {
-             "appID": "BS95LK5P36.com.yvesrocher.alpha", // 8A4CAZ576V.com.example.myapp
+             "appID": "A3F4G9MPR2.com.yvesrocher.alpha", // 8A4CAZ576V.com.example.myapp
              "paths": [ "/recover/*", "/settings/*" ] // you can use wildcard to accept any route like ["*"] and also you can use [ "NOT /recover/*", "*" ] to accept all routes but not the recover
            }
        ]
