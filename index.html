@@ -18,10 +18,14 @@
     </div>
 </body>
 <script>
-    function launchApp() {
+    async function launchApp() {
         var appScheme = "mm://sbaiahmed1";
         var appUrl = "https://play.google.com/store/apps/details?id=com.maxhealthcare";
         var fallbackUrl = "https://www.maxhealthcare.com";
+        const relatedApps = await navigator.getInstalledRelatedApps();
+
+// Dump all the returned related apps into a table in the console
+        alert(relatedApps);
 
         // Launch the app if it's installed
         if (navigator.userAgent.match(/Android/i)) {
