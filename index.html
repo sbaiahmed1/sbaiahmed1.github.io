@@ -27,8 +27,8 @@
         if (navigator.userAgent.match(/Android/i)) {
             window.location = appScheme;
             setTimeout(function () {
-                window.location = appUrl;
-            }, 250);
+                window.location.href= appUrl;
+            }, 1000);
         } else if (navigator.userAgent.match(/(iPad|iPhone|iPod)/i)) {
             var iframe = document.createElement("iframe");
             iframe.style.display = "none";
