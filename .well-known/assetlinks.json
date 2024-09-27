@@ -3,7 +3,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "com.yvesrocher.alpha",
+        "package_name": "com.yvesrocher",
         "sha256_cert_fingerprints": [
           "E3:EF:C7:E7:2C:33:0A:AA:C0:C7:07:37:8F:92:CC:D4:B1:89:96:FD:DC:EC:FE:53:0C:C8:62:DE:7F:4E:9C:B8"
         ]
