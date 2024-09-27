@@ -15,6 +15,37 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="/"><img src="./assets/logo.png" height="70" width="70"></a>
     </div>
+</body>
+<script>
+    function launchApp() {
+        var appScheme = "mm://sbaiahmed1";
+        var appUrl = "https://play.google.com/store/apps/details?id=com.maxhealthcare";
+        var fallbackUrl = "https://www.maxhealthcare.com";
+
+        // Launch the app if it's installed
+        if (navigator.userAgent.match(/Android/i)) {
+            if (document.location.href.indexOf("http") === 0) {
+                document.location = appScheme;
+            } else {
+                window.location = appScheme;
+            }
+            setTimeout(function () {
+                window.location = appUrl;
+            }, 250);
+        } else if (navigator.userAgent.match(/(iPad|iPhone|iPod)/i)) {
+            var iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = appScheme;
+            document.body.appendChild(iframe);
+            setTimeout(function () {
+                window.location = appUrl;
+            }, 250);
+        } else {
+            window.location = fallbackUrl;
+        }
+    }
+</script>
+</html>
 
 
 
