@@ -1,12 +1,9 @@
-[
-    {
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "com.yvesrocher",
-        "sha256_cert_fingerprints": [
-          "E3:EF:C7:E7:2C:33:0A:AA:C0:C7:07:37:8F:92:CC:D4:B1:89:96:FD:DC:EC:FE:53:0C:C8:62:DE:7F:4E:9C:B8"
-        ]
-      }
-    }
-  ]
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.yvesrocher.alpha",
+    "sha256_cert_fingerprints":
+    ["4E:09:DE:63:11:72:21:17:95:3F:ED:D6:B9:95:6D:99:A3:E4:05:6B:71:2C:AC:D0:E1:DE:6B:48:B8:83:BF:6B"]
+  }
+}]
