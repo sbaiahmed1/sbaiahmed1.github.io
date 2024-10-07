@@ -162,7 +162,7 @@
             statusIndicator.textContent = 'Checking...';
             statusIndicator.className = 'status-indicator checking';
 
-            const isInstalled = await detectApp.checkUsingURLScheme(scheme);
+            const isInstalled = await detectApp.checkUsingURLScheme(scheme, "https://play.google.com/store/apps/details?id=com.yvesrocher");
 
             statusIndicator.textContent = isInstalled ? 'Installed' : 'Not Installed';
             statusIndicator.className = 'status-indicator ' +
