@@ -1,58 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="apple-itunes-app" content="app-id=485296924">
+    <meta name="google-play-app" content="app-id=com.yvesrocher">
     <link rel="manifest" href="manifest.json">
-
-    <title>Ahmed Sbai</title>
+    <title>App Detection Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .app-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        .status-indicator {
+            margin-left: auto;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .checking {
+            background-color: #ffd700;
+            color: #000;
+        }
+        .installed {
+            background-color: #90EE90;
+            color: #006400;
+        }
+        .not-installed {
+            background-color: #ffcccb;
+            color: #8b0000;
+        }
+        .check-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            width: 100%;
+        }
+        .check-button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+            padding: 10px;
+            border-left: 3px solid #4CAF50;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
-
 <body>
-    <div onclick="launchApp()">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/">Hello world</a>
-        </nav>
-    </div>
-</body>
-<script>
-    function launchApp() {
-        var appScheme = "https://sbaiahmed1.github.io";
-        var appUrl = "https://play.google.com/store/apps/details?id=com.yvesrocher";
-        var fallbackUrl = "https://www.yves-rocher.fr";
+<div class="container">
+    <h1>App Detection Demo</h1>
 
-        navigator.getInstalledRelatedApps().then(function (relatedApps) {
-            console.log(relatedApps)
-            alert(relatedApps)
-            if (relatedApps.length > 0) {
-                relatedApps.forEach(function (app) {
-                    if (app.platform === 'play') {
-                        appUrl = app.url;
+    <button id="checkAll" class="check-button">Check All Apps</button>
+
+    <div id="appList">
+        <div class="app-item" data-scheme="whatsapp://" data-name="WhatsApp">
+            <img src="/api/placeholder/40/40" alt="WhatsApp" class="app-icon">
+            <span>WhatsApp</span>
+            <span class="status-indicator">Not checked</span>
+        </div>
+
+        <div class="app-item" data-scheme="tg://" data-name="Telegram">
+            <img src="/api/placeholder/40/40" alt="Telegram" class="app-icon">
+            <span>Telegram</span>
+            <span class="status-indicator">Not checked</span>
+        </div>
+
+        <div class="app-item" data-scheme="fb://" data-name="Facebook">
+            <img src="/api/placeholder/40/40" alt="Facebook" class="app-icon">
+            <span>Facebook</span>
+            <span class="status-indicator">Not checked</span>
+        </div>
+
+        <div class="app-item" data-scheme="instagram://" data-name="Instagram">
+            <img src="/api/placeholder/40/40" alt="Instagram" class="app-icon">
+            <span>Instagram</span>
+            <span class="status-indicator">Not checked</span>
+        </div>
+    </div>
+
+    <div class="note">
+        Note: This detection method may not be 100% accurate due to browser security restrictions.
+        Results may vary depending on your browser and device settings.
+    </div>
+</div>
+
+<script>
+    const detectApp = {
+        checkUsingURLScheme: function(scheme, fallbackUrl) {
+            return new Promise((resolve) => {
+                const timeout = 2000;
+                let timeoutId;
+
+                const handleSuccess = () => {
+                    clearTimeout(timeoutId);
+                    resolve(true);
+                };
+
+                const handleFailure = () => {
+                    clearTimeout(timeoutId);
+                    resolve(false);
+                    if (fallbackUrl) {
+                        // In this demo, we'll skip the actual redirect
+                        console.log('Would redirect to:', fallbackUrl);
+                    }
+                };
+
+                timeoutId = setTimeout(handleFailure, timeout);
+
+                // Try to open the app
+                window.location.href = scheme;
+
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden) {
+                        handleSuccess();
                     }
                 });
-            }
-        });
+            });
+        }
+    };
 
-        // Launch the app if it's installed
-        if (navigator.userAgent.match(/Android/i)) {
-            window.location = appScheme;
-            setTimeout(function () {
-                window.location.href= appUrl;
-            }, 1000);
-        } else if (navigator.userAgent.match(/(iPad|iPhone|iPod)/i)) {
-            var iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            iframe.src = appScheme;
-            document.body.appendChild(iframe);
-            setTimeout(function () {
-                window.location = appUrl;
-            }, 250);
-        } else {
-            window.location = fallbackUrl;
+    async function checkApp(appElement) {
+        const scheme = appElement.dataset.scheme;
+        const statusIndicator = appElement.querySelector('.status-indicator');
+
+        try {
+            statusIndicator.textContent = 'Checking...';
+            statusIndicator.className = 'status-indicator checking';
+
+            const isInstalled = await detectApp.checkUsingURLScheme(scheme);
+
+            statusIndicator.textContent = isInstalled ? 'Installed' : 'Not Installed';
+            statusIndicator.className = 'status-indicator ' +
+                (isInstalled ? 'installed' : 'not-installed');
+        } catch (error) {
+            statusIndicator.textContent = 'Error checking';
+            statusIndicator.className = 'status-indicator not-installed';
+            console.error('Error checking app:', error);
         }
     }
+
+    document.getElementById('checkAll').addEventListener('click', async () => {
+        const apps = document.querySelectorAll('.app-item');
+        for (const app of apps) {
+            await checkApp(app);
+            // Add a small delay between checks to prevent overwhelming the browser
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+    });
+
+    // Allow checking individual apps by clicking on them
+    document.querySelectorAll('.app-item').forEach(app => {
+        app.addEventListener('click', () => checkApp(app));
+    });
 </script>
+</body>
 </html>
