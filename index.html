@@ -14,7 +14,7 @@
 <body>
     <div onclick="launchApp()">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/"></a>
+                <a class="navbar-brand" href="/">Hello world</a>
         </nav>
     </div>
 </body>
@@ -23,6 +23,18 @@
         var appScheme = "https://sbaiahmed1.github.io";
         var appUrl = "https://play.google.com/store/apps/details?id=com.yvesrocher";
         var fallbackUrl = "https://www.yves-rocher.fr";
+
+        navigator.getInstalledRelatedApps().then(function (relatedApps) {
+            console.log(relatedApps)
+            alert(relatedApps)
+            if (relatedApps.length > 0) {
+                relatedApps.forEach(function (app) {
+                    if (app.platform === 'play') {
+                        appUrl = app.url;
+                    }
+                });
+            }
+        });
 
         // Launch the app if it's installed
         if (navigator.userAgent.match(/Android/i)) {
