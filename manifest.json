@@ -17,7 +17,7 @@
   "related_applications": [
     {
       "platform": "play",
-      "id": "com.yvesrocher",
+      "id": "com.yvesrocher"
     }
   ],
   "start_url": "/",
